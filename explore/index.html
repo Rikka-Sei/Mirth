@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>Mirth · Web K 参考样板</title>
+</head>
+<body>
+  <div class="workspace" data-view="chat">
+    <aside class="sidebar" aria-label="示例会话">
+      <header class="brand"><strong>Mirth</strong><span class="prototype-tag">界面探索</span></header>
+      <nav class="section-nav" aria-label="样板页面"><button type="button" data-page="chat" aria-current="page">会话</button><button type="button" data-page="gallery">组件预览</button></nav>
+      <label class="search"><span id="search-icon"></span><input id="room-search" type="search" placeholder="搜索会话" aria-label="搜索示例会话"><kbd>⌘ K</kbd></label>
+      <div id="rooms" class="room-list"></div>
+      <footer class="sidebar-footer"><span class="account-avatar">R</span><div><strong>你的工作空间</strong><span>原创视觉探索 · 示例数据</span></div><button class="icon-button theme-toggle" type="button" aria-label="切换深色主题"></button></footer>
+    </aside>
+    <main class="main">
+      <header class="page-header"><button class="icon-button mobile-back" type="button" aria-label="返回会话列表"></button><div id="header-avatar" class="header-avatar" aria-hidden="true"></div><div class="heading"><h1 id="page-title">设计与体验</h1><p id="page-subtitle">4 位示例成员 · 不连接 Matrix</p></div><div class="header-actions"><button class="icon-button gallery-toggle" type="button" aria-label="打开组件预览"></button><button class="icon-button theme-toggle" type="button" aria-label="切换深色主题"></button><button id="detail-toggle" class="icon-button" type="button" aria-label="打开样板说明"></button></div></header>
+      <section id="chat-page" class="chat-page" aria-label="示例聊天">
+        <div id="timeline" class="timeline" role="region" aria-label="示例消息时间线" tabindex="0"></div>
+        <div class="composer-area"><div class="composer-surface"><div id="quote-preview" class="quote-preview" hidden></div><form id="composer" class="composer"><label class="sr-only" for="message-input">样板消息正文</label><button id="attach-button" type="button" class="icon-button" aria-label="选择本地附件"></button><textarea id="message-input" rows="1" placeholder="消息"></textarea><button id="send-button" type="submit" class="send-button" aria-label="添加样板消息" disabled></button></form><div id="file-preview" class="file-preview" hidden></div></div><p class="local-note">独立样板 · 不连接 Matrix · 消息仅存于本页</p><input id="file-input" type="file" hidden></div>
+      </section>
+      <section id="gallery-page" class="gallery-page" aria-label="组件状态预览" hidden></section>
+    </main>
+  </div>
+  <dialog id="detail-dialog" aria-labelledby="detail-title"><header><div><span class="eyebrow">视觉探索 / 03</span><h2 id="detail-title">回到聊天本身。</h2></div><button class="icon-button close-dialog" type="button" aria-label="关闭样板说明"></button></header><div class="dialog-content"><p>这一版以 Telegram Web K 的聊天结构为主参考，不再沿用前两版的平铺消息与调色方案；不是 Telegram，也不是正式组件库。</p><dl><dt>会话</dt><dd>白色侧栏、圆形头像，两行信息；标题、时间和未读计数固定对齐。</dd><dt>消息</dt><dd>收发两侧气泡，群聊展示作者与头像，私聊不逐条重复头像。引用与反应归属消息。</dd><dt>输入</dt><dd>顶栏、消息列和输入板共用宽度；发送按钮位于圆角输入板内部，手机单列导航。</dd><dt>边界</dt><dd>所有会话与消息都是样板数据；未登录、未发送到服务器。未复制 Telegram 源码或品牌资产。</dd></dl><p class="secondary-text">可体验：切换会话、主题、组件预览、回复、反应、附件选择及本页消息添加。视觉确认后，再制定正式组件契约。</p></div></dialog>
+  <dialog id="action-dialog" class="action-dialog" aria-label="消息操作"></dialog>
+  <div id="announcement" class="sr-only" role="status" aria-live="polite"></div>
+  <script type="module" src="./main.ts"></script>
+</body>
+</html>
