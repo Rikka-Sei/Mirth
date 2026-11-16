@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="Mirth 原生响应式聊天界面演示。示例数据，不连接 Matrix 服务器。" />
+    <meta name="theme-color" content="#f7f8f4" />
+    <title>Mirth · 界面演示</title>
+  </head>
+  <body data-theme="light" data-density="compact">
+    <div id="app" class="app" data-view="list">
+      <nav class="rail" aria-label="空间与应用">
+        <div class="brand-mark" aria-label="Mirth">m<span>·</span></div>
+        <div id="space-list" class="rail-spaces"></div>
+        <div class="rail-bottom" id="rail-bottom"></div>
+      </nav>
+      <aside class="sidebar" aria-label="会话列表">
+        <header class="sidebar-heading">
+          <div><h1>Mirth <span class="demo-badge">示例</span></h1><p class="muted">交流，简单一点。</p></div>
+          <div id="sidebar-actions"></div>
+        </header>
+        <label class="search-field"><span data-icon="search"></span><input id="room-search" type="search" placeholder="搜索会话和消息…" aria-label="搜索会话" autocomplete="off" /><kbd>⌘ K</kbd></label>
+        <div class="filter-tabs" role="group" aria-label="筛选会话">
+          <button class="filter-tab active" type="button" data-filter="all" aria-pressed="true">全部</button>
+          <button class="filter-tab" type="button" data-filter="direct" aria-pressed="false">私聊</button>
+          <button class="filter-tab" type="button" data-filter="unread" aria-pressed="false">未读 <span id="unread-count"></span></button>
+        </div>
+        <label class="mobile-space-picker">空间
+          <select id="mobile-space" aria-label="选择空间">
+            <option value="all">所有会话</option>
+            <option value="mirth">Mirth 空间</option>
+            <option value="open">开放交流</option>
+            <option value="personal">个人会话</option>
+          </select>
+        </label>
+        <div class="list-label"><span id="list-caption">所有会话</span><span id="room-count">8</span></div>
+        <div id="room-list" class="room-list" aria-label="会话"></div>
+        <footer class="sidebar-footer"><span class="pill">交互演示</span><span>示例数据 · 不连接服务器</span></footer>
+      </aside>
+      <main class="conversation" aria-label="当前会话">
+        <header class="chat-header">
+          <div id="back-action"></div>
+          <div id="header-avatar"></div>
+          <div class="chat-heading"><h2 id="room-title">设计讨论</h2><p id="room-subtitle">Mirth 空间 · 4 位示例成员</p></div>
+          <div class="header-actions" id="header-actions"></div>
+        </header>
+        <div class="demo-notice"><span data-icon="leaf"></span><span>这是可点击的 UI 演示。消息仅保留在当前页面，未接入 Matrix。</span></div>
+        <div id="message-search-panel" class="message-search-panel" hidden>
+          <label class="search-field"><span data-icon="search"></span><input id="message-search" type="search" placeholder="搜索当前会话的示例消息" aria-label="搜索当前会话消息" autocomplete="off" /></label>
+          <span id="search-count" class="muted" role="status"></span><div id="search-close"></div>
+        </div>
+        <section id="timeline" class="timeline" aria-label="消息时间线" tabindex="0"></section>
+        <div class="composer-wrap">
+          <div id="reply-preview" class="reply-preview" hidden></div>
+          <div id="attachment-preview" class="attachment-preview" hidden></div>
+          <p id="composer-error" class="composer-error" role="alert" hidden></p>
+          <form id="composer" class="composer" aria-label="本地消息编辑器">
+            <textarea id="message-input" rows="1" maxlength="8000" placeholder="写一条消息…" aria-label="消息正文" aria-describedby="composer-hint"></textarea>
+            <div class="composer-actions"><div id="attachment-action"></div><button class="send-button" id="send-button" type="submit" aria-label="添加本地消息" title="添加本地消息"><span data-icon="send"></span></button></div>
+          </form>
+          <div id="composer-hint" class="composer-hint"><span>Enter 添加本地消息 · Shift + Enter 换行</span><span>仅本地，不上传</span></div>
+          <input id="file-input" type="file" multiple hidden />
+        </div>
+      </main>
+      <dialog id="details-panel" class="details" aria-labelledby="details-title">
+        <header class="panel-header"><h2 id="details-title">会话详情</h2><div id="details-close"></div></header>
+        <div class="detail-hero" id="detail-hero"></div>
+        <div class="detail-stats" id="detail-stats"></div>
+        <div class="panel-tabs" role="group" aria-label="详情内容"><button type="button" data-detail="members" class="active" aria-pressed="true">成员</button><button type="button" data-detail="files" aria-pressed="false">文件</button></div>
+        <div id="detail-content" class="panel-body"></div>
+        <p class="detail-note">这里展示示例资料。真实成员状态、加密验证与通话尚未接入；不表示在线或已验证。</p>
+      </dialog>
+    </div>
+    <dialog id="settings-dialog" class="settings-dialog" aria-labelledby="settings-title">
+      <header class="panel-header"><h2 id="settings-title">外观与演示说明</h2><div id="settings-close"></div></header>
+      <div class="settings-body">
+        <fieldset><legend>外观主题</legend><div class="choice-group"><label><input type="radio" name="theme" value="light" checked /> 浅色</label><label><input type="radio" name="theme" value="dark" /> 深色</label></div></fieldset>
+        <fieldset><legend>消息密度</legend><div class="choice-group"><label><input type="radio" name="density" value="compact" checked /> 紧凑</label><label><input type="radio" name="density" value="comfortable" /> 舒适</label></div></fieldset>
+        <div class="setting-note"><h3>原生界面，不引入 UI 框架</h3><p>TypeScript + 原生 DOM + CSS，Vite 构建。可切换会话、搜索、引用回复、添加本地消息、预览本地附件和调整外观。</p><p>这是示例数据 Demo，不是完整 Matrix 客户端。未提供登录、真实发送、端到端加密、富文本、通话、推送或离线安装。正式协议路线为 matrix-js-sdk。</p><p>消息和附件仅保存在当前页面内存，刷新即清空；主题和密度在浏览器允许时保存在本机。</p></div>
+      </div>
+    </dialog>
+    <div id="announcement" class="sr-only" role="status" aria-live="polite"></div>
+    <noscript>本交互演示需要 JavaScript。源代码与规格文档可直接在仓库阅读。</noscript>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

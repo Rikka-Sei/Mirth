@@ -1,2 +1,7 @@
 /.direnv/
 /scripts/builder/skills/__pycache__/
+/node_modules/
+/dist/
+**/__pycache__/
+/.tmp/
+/.RānaKaname/
