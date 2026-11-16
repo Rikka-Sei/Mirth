@@ -1,5 +1,5 @@
 {
-  description = "Archivum development environment";
+  description = "Mirth Matrix 网页客户端开发环境";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
@@ -18,6 +18,7 @@
             gitMinimal
             gnumake
             nodejs
+            pnpm
             python3
           ];
         };
